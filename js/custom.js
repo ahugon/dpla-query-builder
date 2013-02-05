@@ -5,6 +5,9 @@ $(document).ready(function() {
 	initializeVisualSearch();
 	initializeResults();
 	
+	refreshHandlers("visual");
+	refreshHandlers("semantic");
+	
 });
 
 function hideParent(child)
@@ -92,11 +95,14 @@ function addConstraint(el)
 	newConstraint.addClass(typeOfConstraint);
 	
 	var remove = $('<button class="close animated">&times</button>');
-	remove.click(function(event) { hideParent($(this)); });
+	remove.click(function(event) { hideParent($(this)); submit("visual"); });
 	
 	newConstraint.append(remove);
 	
 	$("#dragspace").append(newConstraint);
+	
+	// handle dynamic recombobulating
+	refreshHandlers("visual");
 }
 
 function initializeVisualSearch()
@@ -177,6 +183,9 @@ function initializeSemanticSearch()
 		// insert the new condition after the other conditions but before the "+ add new xyz" link 
 		condition.insertBefore(parent);
 		
+		// handle dynamic recombobulating
+		refreshHandlers("semantic");
+		
 	});
 	
 	/* clear constraints link */
@@ -200,6 +209,19 @@ function initializeSemanticSearch()
 	
 	});
 	
+}
+
+function refreshHandlers(vis_or_sem)
+{
+	var subdiv = "";
+	if(vis_or_sem == "visual") { subdiv = "div.active-constraint"; }
+	else if(vis_or_sem == "semantic") { subdiv = "div.condition"; }
+	
+	$("." + subdiv + " select, ." + subdiv + " input").change(function(event) {
+		
+		submit(vis_or_sem);
+	
+	});
 }
 
 function submit(vis_or_sem)
