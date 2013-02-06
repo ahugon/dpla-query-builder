@@ -5,9 +5,6 @@ $(document).ready(function() {
 	initializeVisualSearch();
 	initializeResults();
 	
-	refreshHandlers("visual");
-	refreshHandlers("semantic");
-	
 });
 
 function hideParent(child)
@@ -100,9 +97,6 @@ function addConstraint(el)
 	newConstraint.append(remove);
 	
 	$("#dragspace").append(newConstraint);
-	
-	// handle dynamic recombobulating
-	refreshHandlers("visual");
 }
 
 function initializeVisualSearch()
@@ -183,9 +177,6 @@ function initializeSemanticSearch()
 		// insert the new condition after the other conditions but before the "+ add new xyz" link 
 		condition.insertBefore(parent);
 		
-		// handle dynamic recombobulating
-		refreshHandlers("semantic");
-		
 	});
 	
 	/* clear constraints link */
@@ -209,19 +200,6 @@ function initializeSemanticSearch()
 	
 	});
 	
-}
-
-function refreshHandlers(vis_or_sem)
-{
-	var subdiv = "";
-	if(vis_or_sem == "visual") { subdiv = "div.active-constraint"; }
-	else if(vis_or_sem == "semantic") { subdiv = "div.condition"; }
-	
-	$("." + subdiv + " select, ." + subdiv + " input").change(function(event) {
-		
-		submit(vis_or_sem);
-	
-	});
 }
 
 function submit(vis_or_sem)
@@ -273,9 +251,26 @@ function submit(vis_or_sem)
 			$.post("query.php", {fields:fields, field_values:field_values, temporal:temporal, dates:dates, location:location}, function(data) {
 			
 				var q = data.query;
-				var results = data.results;
+				var results = data.results;		
 				
-				$("div#results").html("<strong>Your query was: </strong> " + q + "<hr>" + results);
+				var JSON = $.parseJSON(results);
+				var count = JSON.count;
+				
+				var formatted = "";
+				
+				for(var i = 0; i < count; i++)
+				{
+					formatted += "<h2>" + JSON.docs[i].title + "</h2>" + JSON.docs[i].description + "<br><br>";
+					formatted += "<strong>Subject:</strong> " + JSON.docs[i].subject[0].name + "<br>";
+					formatted += "<strong>Contributor:</strong> " + JSON.docs[i].contributor + "<br>";
+					formatted += "<strong>DPLA Contributor:</strong> " + JSON.docs[i].dplaContributor.name + "<br>";
+					formatted += "<hr>";
+				}
+				
+				$("div#results").html("Your query &mdash; " + q + " &mdash; produced " + count + " result(s):<hr>" + formatted);
+				
+				$("#" + vis_or_sem + " a#" + vis_or_sem + "-download").attr("href", q);
+				
 				$("div#results").slideDown();
 			
 			}, "json");

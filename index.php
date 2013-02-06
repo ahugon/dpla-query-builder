@@ -116,6 +116,9 @@
 										</section>
 										<section>
 											<a id="semantic-submit" class="btn btn-red">Show results</a> <a id="semantic-clear" class="btn">Clear constraints</a>
+											<div class="float-right">
+												<a id="semantic-download" class="btn btn-inverse">Download results</a>
+											</div>
 										</section>
 									</div>
 								</div>
@@ -135,6 +138,9 @@
 										</section>
 										<section>
 											<a id="visual-submit" class="btn btn-red">Show results</a> <a id="visual-clear" class="btn">Clear constraints</a>
+											<div class="float-right">
+												<a id="visual-download" class="btn btn-inverse">Download results</a>
+											</div>
 										</section>
 									</div>
 								</div>

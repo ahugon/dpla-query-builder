@@ -49,15 +49,9 @@
 	// perform the API request and catch the result
 	$json_response = file_get_contents($url_full,0,null,null);
 	
-	//$tstamp = str_replace(" ", "-", microtime());
-	//$handle = fopen("searches/" . $tstamp . ".json", "w");
-    //fwrite($handle, $json_response);
-    //fclose($handle);
-	
 	// encode the result of the API call back to our waiting handler in custom.js 
 	$array = array();
 	$array["query"] = $url_full;
-	//$array["loc"] = $tstamp;
 	$array["results"] = $json_response;
 	echo(json_encode($array));
 

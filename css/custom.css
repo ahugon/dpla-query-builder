@@ -184,8 +184,15 @@ div.result-wrapper
 div#results
 {
 	background: #FFFFFF;
-	overflow: scroll;
+	overflow: scroll-y;
 	display: none;
+	padding: 10px;
+}
+
+div#results h2 
+{
+	color: #333333;
+	font-size: 24px;
 }
 
 div.question hr
