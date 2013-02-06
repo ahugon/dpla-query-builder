@@ -1,3 +1,5 @@
+var page = 1;
+var state = "";
 
 $(document).ready(function() {
 
@@ -14,6 +16,7 @@ function hideParent(child)
 
 function clearResults()
 {
+	page = 1;
 	$("div#results").slideUp(400, function() { $(this).html(""); });
 }
 
@@ -23,6 +26,24 @@ function initializeResults()
 	$("a#clear-results").click(function(event) {
 	
 		clearResults();
+	
+	});
+	
+	$(".next").click(function(event) {
+	
+		page++;
+		submit(state);
+	
+	});
+	
+	$(".previous").click(function(event) {
+	
+		page--;
+		if(page <= 0)
+		{
+			page = 1;
+		}
+		submit(state);
 	
 	});
 }
@@ -118,6 +139,7 @@ function initializeVisualSearch()
 	/* submit form link */
 	$("#visual a#visual-submit").click(function(event) {
 	
+		page = 1;
 		submit("visual");
 	
 	});
@@ -196,6 +218,7 @@ function initializeSemanticSearch()
 	/* submit form link */
 	$("#semantic a#semantic-submit").click(function(event) {
 	
+		page = 1;
 		submit("semantic");
 	
 	});
@@ -205,6 +228,8 @@ function initializeSemanticSearch()
 function submit(vis_or_sem)
 {
 	clearResults();
+	
+	state = vis_or_sem;
 	
 	var fields = "";
 	var field_values = "";
@@ -248,7 +273,7 @@ function submit(vis_or_sem)
 		
 		if(count_conditions == num_conditions)
 		{
-			$.post("query.php", {fields:fields, field_values:field_values, temporal:temporal, dates:dates, location:location}, function(data) {
+			$.post("query.php", {fields:fields, field_values:field_values, temporal:temporal, dates:dates, location:location, page:page}, function(data) {
 			
 				var q = data.query;
 				var results = data.results;		
@@ -260,9 +285,12 @@ function submit(vis_or_sem)
 				
 				for(var i = 0; i < count; i++)
 				{
+					if(!JSON.docs[i])
+					{
+						continue;
+					}
+				
 					formatted += "<h2>" + JSON.docs[i].title + "</h2>" + JSON.docs[i].description + "<br><br>";
-					formatted += "<strong>Subject:</strong> " + JSON.docs[i].subject[0].name + "<br>";
-					formatted += "<strong>Contributor:</strong> " + JSON.docs[i].contributor + "<br>";
 					formatted += "<strong>DPLA Contributor:</strong> " + JSON.docs[i].dplaContributor.name + "<br>";
 					formatted += "<hr>";
 				}

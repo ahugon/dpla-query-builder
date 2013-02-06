@@ -151,6 +151,14 @@
 							<div class="upper-right"><a id="clear-results">clear results</a></div>
 							<h3>Results</h3>
 							<div id="results"></div>
+							<ul class="pager">
+								<li class="previous">
+									<a>&larr; Previous page</a>
+								</li>
+								<li class="next">
+									<a>Next page &rarr;</a>
+								</li>
+							</ul>
 						</div>
 					</div>
 				</div>
