@@ -16,9 +16,16 @@
 		<script src='js/jquery.ui.droppable.min.js'></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/custom.js"></script>
+		
+		<script type="text/javascript" src="d3/d3.js"></script>
+		<script type="text/javascript" src="d3/d3.layout.js"></script>
+		
+		<link href="css/visualization.css" rel="stylesheet" type="text/css" />
+		<script src="visualization.js"></script>
 	</head>
 	
 	<body>
+		
 		<div id="scroll-to-top" title="Scroll to top"></div>
 		
 		<div id="wrap" class="container">
@@ -167,6 +174,81 @@
 									<a>Next page &rarr;</a>
 								</li>
 							</ul>
+						</div>
+						
+						<div class="viz">
+							<div id="controls">
+
+								<div class="question">
+									<div class=" row-fluid">
+									
+									<div class="span6">
+										<input type="text" style="width:500px" id="query"></input>
+									</div>
+									<div class="span2 querybox">
+									<a id="newquery" class="btn btn-red btn-large" style="margin-left: 50px; margin-top: -10px;">Visualize</a>
+									</div>
+										<div id="loading" class="hidden span2  querybox">loading...</div>
+
+								</div>
+
+								<div class="row-fluid">
+								<div class="span10">
+									Query info: 
+									<span id="query-info"></span>
+								</div>
+
+								</div>
+
+								<div class="row-fluid">
+									<div class="span3">
+									<h3>1st sort</h3>  	
+									<select id="var1" class="variable_menu">
+										<option value="format"><a href="#">Format</a></option>
+										<option value="publisher"><a href="#">Publisher</a></option>
+										<option value="date" ><a href="#">Date</a></option>
+										<option value="collection" selected><a href="#">Collection</a></option>
+										<option value="contributor" ><a href="#">DPLA Contributor</a></option>
+										<option value="nada"><a href="#">Nada</a></option>
+
+									</select>
+								 </div>
+								 
+								 
+								 <div class="span3">
+									<h3>2nd sort</h3>  	
+									<select id="var2" class="variable_menu">
+										<option value="format"><a href="#" selected>Format</a></option>
+										<option value="publisher"><a href="#">Publisher</a></option>
+										<option value="date"><a href="#">Date</a></option>
+										<option value="collection"><a href="#">Collection</a></option>
+										<option value="contributor" ><a href="#">DPLA Contributor</a></option>
+										<option value="nada"><a href="#">Nada</a></option>
+
+									</select>
+								  </div>
+								  
+								  <div class="span3">
+									<h3>3rd sort</h3>  	
+									<select id="var3" class="variable_menu">
+										<option value="format"><a href="#">Format</a></option>
+										<option value="publisher"><a href="#">Publisher</a></option>
+										<option value="date"><a href="#" selected>Date</a></option>
+										<option value="collection"><a href="#">Collection</a></option>
+										<option value="contributor" ><a href="#">DPLA Contributor</a></option>
+										<option value="nada"><a href="#">Nada</a></option>
+									</select>
+									</div>
+									
+									</div>
+									
+								</div>
+
+
+							</div>
+							<div id="body">
+							</div>
+
 						</div>
 					</div>
 				</div>

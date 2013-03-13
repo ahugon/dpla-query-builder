@@ -173,6 +173,11 @@ div.active-constraint button
 	margin-left: 5px;
 }
 
+div.viz
+{
+	margin-top: 20px;
+}
+
 div.result-wrapper
 {
 	background: #EEEEEE;

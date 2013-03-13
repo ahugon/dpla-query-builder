@@ -315,6 +315,9 @@ function submit(vis_or_sem)
 				$("#" + vis_or_sem + " a#" + vis_or_sem + "-download").attr("href", q);
 				
 				$("div#results").slideDown();
+				
+				/* Jessica text box for querying gets populated */
+				$("#query").val(q);
 			
 			}, "json");
 		}
