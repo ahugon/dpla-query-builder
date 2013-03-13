@@ -83,14 +83,12 @@
 													<option>title</option>
 													<option>description</option>
 													<option>subject</option>
-													<option>dplaContributor</option>
 													<option>creator</option>
 													<option>type</option>
 													<option>publisher</option>
 													<option>format</option>
 													<option>rights</option>
 													<option>contributor</option>
-													<option>isPartOf</option>
 												</select> is <input type="text" class="span4" placeholder="e.g. Divina Commedia" />
 											</div>
 											<div class="add-field">
@@ -111,7 +109,16 @@
 										</section>
 										<section class="location">
 											<div class="condition where">
-												with a location of <input type="text" class="span2" placeholder="e.g. Italy" />, please!&rdquo;
+												with a location of <input type="text" class="span2" placeholder="e.g. Italy" />
+											</div>
+										</section>
+										<section class="sort">
+											<div class="condition sort">
+												sorted by <select class="span2">
+															<option value="date.begin">date</option>
+															<option value="title">title</option>
+															<option value="subject.name">name</option>
+														</select>.&rdquo;
 											</div>
 										</section>
 										<section>
@@ -132,7 +139,8 @@
 												<h3>Constraint Menu</h3>
 												<div class="drag-source" id="field-source">Field constraint</div>
 												<div class="drag-source" id="temporal-source">Temporal constraint</div>
-												<div class="drag-source" id="location-source">Location constraint</div>												
+												<div class="drag-source" id="location-source">Location constraint</div>	
+												<div class="drag-source" id="sort-source">Sort-by constraint</div>
 											</div>
 											<div class="clear"></div>
 										</section>

@@ -16,7 +16,6 @@ function hideParent(child)
 
 function clearResults()
 {
-	page = 1;
 	$("div#results").slideUp(400, function() { $(this).html(""); });
 }
 
@@ -32,6 +31,7 @@ function initializeResults()
 	$(".next").click(function(event) {
 	
 		page++;
+		alert(page);
 		submit(state);
 	
 	});
@@ -43,6 +43,7 @@ function initializeResults()
 		{
 			page = 1;
 		}
+		alert(page);
 		submit(state);
 	
 	});
@@ -84,14 +85,12 @@ function addConstraint(el)
 						'	<option>title</option>' + 
 						'	<option>description</option>' + 
 						'	<option>subject</option>' + 
-						'	<option>dplaContributor</option>' + 
 						'	<option>creator</option>' + 
 						'	<option>type</option>' + 
 						'	<option>publisher</option>' + 
 						'	<option>format</option>' + 
 						'	<option>rights</option>' + 
 						'	<option>contributor</option>' + 
-						'	<option>isPartOf</option>' + 
 					'</select> = <input type="text" class="span2" placeholder="e.g. Dante" />';
 		typeOfConstraint = "field";
 	}
@@ -107,6 +106,15 @@ function addConstraint(el)
 	{
 		contents += 'Location of <input type="text" class="span2" placeholder="e.g. Italy" />';
 		typeOfConstraint = "where";
+	}
+	else if(id == "sort-source")
+	{
+		contents += 'Sort results by <select class="span2">' +
+										'<option value="date.begin">date</option>' +
+										'<option value="title">title</option>' +
+										'<option value="subject.name">name</option>' +
+									'</select>';
+		typeOfConstraint = "sort";
 	}
 	
 	newConstraint.html(contents);
@@ -166,14 +174,12 @@ function initializeSemanticSearch()
 						'	<option>title</option>' + 
 						'	<option>description</option>' + 
 						'	<option>subject</option>' + 
-						'	<option>dplaContributor</option>' + 
 						'	<option>creator</option>' + 
 						'	<option>type</option>' + 
 						'	<option>publisher</option>' + 
 						'	<option>format</option>' + 
 						'	<option>rights</option>' + 
 						'	<option>contributor</option>' + 
-						'	<option>isPartOf</option>' + 
 						'</select> is <input type="text" class="span4" placeholder="e.g. Divina Commedia" />&nbsp;';
 			conditionType = "field";
 		}
@@ -227,7 +233,8 @@ function initializeSemanticSearch()
 
 function submit(vis_or_sem)
 {
-	clearResults();
+	// clear results, but don't necessarily reset page to 1 cuz we might be paginating...
+	$("div#results").slideUp(400, function() { $(this).html(""); });
 	
 	state = vis_or_sem;
 	
@@ -236,6 +243,7 @@ function submit(vis_or_sem)
 	var temporal = "";
 	var dates = "";
 	var location = "";
+	var sortby = "";
 	
 	var subdiv = "";
 	if(vis_or_sem == "visual") { subdiv = "div.active-constraint"; }
@@ -268,12 +276,18 @@ function submit(vis_or_sem)
 			location += $(this).find('input[type="text"]').val();
 		}
 		
+		// handle sorting
+		else if($(this).hasClass("sort"))
+		{
+			sortby += $(this).find("select").val();
+		}
+		
 		// keep track of how many we've processed out of total # of constraints
 		count_conditions++;
 		
 		if(count_conditions == num_conditions)
 		{
-			$.post("query.php", {fields:fields, field_values:field_values, temporal:temporal, dates:dates, location:location, page:page}, function(data) {
+			$.post("query.php", {fields:fields, field_values:field_values, temporal:temporal, dates:dates, location:location, sortby:sortby, page:page}, function(data) {
 			
 				var q = data.query;
 				var results = data.results;		
@@ -285,13 +299,14 @@ function submit(vis_or_sem)
 				
 				for(var i = 0; i < count; i++)
 				{
-					if(!JSON.docs[i])
+					if(!JSON.docs[i] || !JSON.docs[i].originalRecord)
 					{
 						continue;
 					}
 				
-					formatted += "<h2>" + JSON.docs[i].title + "</h2>" + JSON.docs[i].description + "<br><br>";
-					formatted += "<strong>DPLA Contributor:</strong> " + JSON.docs[i].dplaContributor.name + "<br>";
+					formatted += "<h2>" + JSON.docs[i].originalRecord.subject + "</h2>" + JSON.docs[i].originalRecord.description + "<br><br>";
+					if(typeof JSON.docs[i].provider !== 'undefined')
+						formatted += "<strong>DPLA Contributor:</strong> " + JSON.docs[i].provider.name + "<br>";
 					formatted += "<hr>";
 				}
 				
