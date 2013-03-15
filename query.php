@@ -1,5 +1,5 @@
 <?
-	$url_base = "http://api.dp.la/dev/items?page_size=10&page=" . $_POST["page"] . "&";
+	$url_base = "http://api.dp.la/dev/items?page_size=" . $_POST["res"] . "&page=" . $_POST["page"] . "&";
 	
 	$url_fields = "";
 	$url_dates = "";

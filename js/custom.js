@@ -31,7 +31,6 @@ function initializeResults()
 	$(".next").click(function(event) {
 	
 		page++;
-		alert(page);
 		submit(state);
 	
 	});
@@ -43,7 +42,13 @@ function initializeResults()
 		{
 			page = 1;
 		}
-		alert(page);
+		submit(state);
+	
+	});
+	
+	$("#jump").change(function(event) {
+	
+		page = $(this).val();
 		submit(state);
 	
 	});
@@ -249,6 +254,10 @@ function submit(vis_or_sem)
 	if(vis_or_sem == "visual") { subdiv = "div.active-constraint"; }
 	else if(vis_or_sem == "semantic") { subdiv = "div.condition"; }
 	
+	var results_per_page = 0;
+	if(vis_or_sem == "visual") { results_per_page = $("#vis_results_per_page").val(); }
+	else if(vis_or_sem == "semantic") { results_per_page = $("#sem_results_per_page").val(); }
+	
 	var num_conditions = $("#" + vis_or_sem + " " + subdiv).length;
 	var count_conditions = 0;
 	
@@ -287,7 +296,7 @@ function submit(vis_or_sem)
 		
 		if(count_conditions == num_conditions)
 		{
-			$.post("query.php", {fields:fields, field_values:field_values, temporal:temporal, dates:dates, location:location, sortby:sortby, page:page}, function(data) {
+			$.post("query.php", {fields:fields, field_values:field_values, temporal:temporal, dates:dates, location:location, sortby:sortby, page:page, res:results_per_page}, function(data) {
 			
 				var q = data.query;
 				var results = data.results;		
@@ -311,6 +320,8 @@ function submit(vis_or_sem)
 				}
 				
 				$("div#results").html("Your query &mdash; " + q + " &mdash; produced " + count + " result(s):<hr>" + formatted);
+				
+				$("#total_pages").html(Math.floor(count / results_per_page) + 1);
 				
 				$("#" + vis_or_sem + " a#" + vis_or_sem + "-download").attr("href", q);
 				

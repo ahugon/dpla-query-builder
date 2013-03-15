@@ -129,7 +129,7 @@
 											</div>
 										</section>
 										<section>
-											<a id="semantic-submit" class="btn btn-red">Show results</a> <a id="semantic-clear" class="btn">Clear constraints</a>
+											<a id="semantic-submit" class="btn btn-red">Show results</a> <a id="semantic-clear" class="btn">Clear constraints</a> &middot; Show <input id="sem_results_per_page" class="span1" type="text" value="75" /> results per page
 											<div class="float-right">
 												<a id="semantic-download" class="btn btn-inverse">Download results</a>
 											</div>
@@ -152,7 +152,7 @@
 											<div class="clear"></div>
 										</section>
 										<section>
-											<a id="visual-submit" class="btn btn-red">Show results</a> <a id="visual-clear" class="btn">Clear constraints</a>
+											<a id="visual-submit" class="btn btn-red">Show results</a> <a id="visual-clear" class="btn">Clear constraints</a> &middot; Show <input id="vis_results_per_page" class="span1" type="text" value="75" /> results per page
 											<div class="float-right">
 												<a id="visual-download" class="btn btn-inverse">Download results</a>
 											</div>
@@ -165,6 +165,7 @@
 						<div class="result-wrapper">
 							<div class="upper-right"><a id="clear-results">clear results</a></div>
 							<h3>Results</h3>
+							Jump to page <input id="jump" type="text" class="span1" value="1" /> (Total pages of results: <span id="total_pages">0</span>)
 							<div id="results"></div>
 							<ul class="pager">
 								<li class="previous">
