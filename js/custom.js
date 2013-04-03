@@ -17,6 +17,7 @@ function hideParent(child)
 function clearResults()
 {
 	$("div#results").slideUp(400, function() { $(this).html(""); });
+	$("#total_pages").html("0");
 }
 
 function initializeResults()
@@ -146,6 +147,7 @@ function initializeVisualSearch()
 	
 		// trigger the "remove" event for each constraint
 		$("div.active-constraint button").each(function() { $(this).click(); });
+		return false;
 	
 	});
 	
@@ -154,6 +156,7 @@ function initializeVisualSearch()
 	
 		page = 1;
 		submit("visual");
+		return false;
 	
 	});
 	
@@ -223,6 +226,7 @@ function initializeSemanticSearch()
 		
 		// reset the dropdowns
 		$("select").each(function() { $(this).find('option:first').attr('selected', 'selected'); });
+		return false;
 		
 	});
 	
@@ -231,6 +235,7 @@ function initializeSemanticSearch()
 	
 		page = 1;
 		submit("semantic");
+		return false;
 	
 	});
 	
@@ -308,14 +313,14 @@ function submit(vis_or_sem)
 				
 				for(var i = 0; i < count; i++)
 				{
-					if(!JSON.docs[i] || !JSON.docs[i].originalRecord)
+					if(!JSON.docs[i])
 					{
 						continue;
 					}
 				
-					formatted += "<h2>" + JSON.docs[i].originalRecord.subject + "</h2>" + JSON.docs[i].originalRecord.description + "<br><br>";
-					if(typeof JSON.docs[i].provider !== 'undefined')
-						formatted += "<strong>DPLA Contributor:</strong> " + JSON.docs[i].provider.name + "<br>";
+					formatted += "<h2>" + JSON.docs[i].title + "</h2>" + JSON.docs[i].description + "<br><br>";
+					formatted += "<strong>DPLA Contributor:</strong> " + JSON.docs[i].dplaContributor.name + "<br>";
+					formatted += "<strong><a target='_blank' href='" + JSON.docs[i].source + "'>View original record</a></strong><br>";
 					formatted += "<hr>";
 				}
 				
@@ -326,9 +331,6 @@ function submit(vis_or_sem)
 				$("#" + vis_or_sem + " a#" + vis_or_sem + "-download").attr("href", q);
 				
 				$("div#results").slideDown();
-				
-				/* Jessica text box for querying gets populated */
-				$("#query").val(q);
 			
 			}, "json");
 		}
