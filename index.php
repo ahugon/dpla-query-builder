@@ -175,7 +175,7 @@
 			
 			<footer>
 				<div class="float-left"><a href="http://metalab.harvard.edu">metaLAB (at) Harvard</a> &middot; <a href="http://cyber.law.harvard.edu/">Berkman Center for Internet & Society</a> &middot; <a href="http://dp.la/">DPLA</a></div>
-				<div class="float-right">Site by <a href="http://metalab.harvard.edu">metaLAB (at) Harvard</a></div>
+				<div class="float-right">Site by <a href="http://www.alexhugon.me/">Alex Hugon</a></div>
 			</footer>
 		</div>		
 	</body>
